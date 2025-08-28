@@ -1,17 +1,17 @@
-import { App, Editor, MarkdownView, Modal, Notice, Plugin, PluginSettingTab, Setting } from 'obsidian';
+import {App, Editor, MarkdownView, Modal, Notice, Plugin, PluginSettingTab, Setting} from 'obsidian';
 
 // Remember to rename these classes and interfaces!
 
-interface MyPluginSettings {
+interface DisastersCalendarSettings {
 	mySetting: string;
 }
 
-const DEFAULT_SETTINGS: MyPluginSettings = {
+const DEFAULT_SETTINGS: DisastersCalendarSettings = {
 	mySetting: 'default'
 }
 
-export default class MyPlugin extends Plugin {
-	settings: MyPluginSettings;
+export default class DisastersCalendar extends Plugin {
+	settings: DisastersCalendarSettings;
 
 	async onload() {
 		await this.loadSettings();
@@ -108,9 +108,9 @@ class SampleModal extends Modal {
 }
 
 class SampleSettingTab extends PluginSettingTab {
-	plugin: MyPlugin;
+	plugin: DisastersCalendar;
 
-	constructor(app: App, plugin: MyPlugin) {
+	constructor(app: App, plugin: DisastersCalendar) {
 		super(app, plugin);
 		this.plugin = plugin;
 	}
