@@ -1,11 +1,11 @@
 {
-	"id": "sample-plugin",
-	"name": "Sample Plugin",
-	"version": "1.0.0",
+	"id": "disasters-calendar",
+	"name": "Disaster's Calendar",
+	"version": "0.0.0",
 	"minAppVersion": "0.15.0",
-	"description": "Demonstrates some of the capabilities of the Obsidian API.",
-	"author": "Obsidian",
-	"authorUrl": "https://obsidian.md",
-	"fundingUrl": "https://obsidian.md/pricing",
+	"description": "Creates a beautiful amalgamation of the plugins April's automatic timeline and Calendarium.",
+	"author": "UnknownDisaster",
+	"authorUrl": "",
+	"fundingUrl": "",
 	"isDesktopOnly": false
 }
