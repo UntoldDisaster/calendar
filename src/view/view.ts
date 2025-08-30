@@ -18,29 +18,30 @@ export const View = {
 
 export type View = (typeof View)[keyof typeof View];
 
-export class DefaultItemView extends ItemView {
-
-	constructor(leaf: WorkspaceLeaf, private view: View) {
+export class CalendarView extends ItemView {
+	constructor(leaf: WorkspaceLeaf) {
 		super(leaf);
 	}
 
 	getViewType(): string {
-		return this.view.key;
+		return View.Calendar.key;
 	}
 
 	getDisplayText(): string {
-		return this.view.name;
+		return View.Calendar.name;
 	}
 }
 
-export class CalendarView extends DefaultItemView {
+export class TimelineView extends ItemView {
 	constructor(leaf: WorkspaceLeaf) {
-		super(leaf, View.Calendar);
+		super(leaf);
 	}
-}
 
-export class TimelineView extends DefaultItemView {
-	constructor(leaf: WorkspaceLeaf) {
-		super(leaf, View.Timeline);
+	getViewType(): string {
+		return View.Timeline.key;
+	}
+
+	getDisplayText(): string {
+		return View.Timeline.name;
 	}
 }

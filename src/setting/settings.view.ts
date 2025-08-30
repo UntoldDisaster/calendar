@@ -1,6 +1,14 @@
 import {App, PluginSettingTab, Setting} from "obsidian";
 import DisastersCalendar from "../main";
 
+export interface DisastersCalendarSettings {
+	showCalendarRibbon: boolean;
+}
+
+export const DEFAULT_SETTINGS: DisastersCalendarSettings = {
+	showCalendarRibbon: true
+}
+
 export class DisastersCalendarSettingTab extends PluginSettingTab {
 	plugin: DisastersCalendar;
 
@@ -16,14 +24,16 @@ export class DisastersCalendarSettingTab extends PluginSettingTab {
 		containerEl.empty();
 
 		new Setting(containerEl)
-			.setName('Setting #1')
-			.setDesc('It\'s a secret')
-			.addText(text => text
-				.setPlaceholder('Enter your secret')
-				.setValue(this.plugin.settings.mySetting)
-				.onChange(async (value) => {
-					this.plugin.settings.mySetting = value;
-					await this.plugin.saveSettings();
-				}));
+			.setName('Show Calendar Ribbon')
+			.setDesc('Toggle whether the calendar Icon should be displayed in the Ribbon.')
+			.addToggle(
+				t => t.setValue(this.plugin.settings.showCalendarRibbon)
+					.onChange(async (value) => {
+						this.plugin.settings.showCalendarRibbon = value;
+						await this.plugin.saveSettings();
+						if(value) {
+
+						}
+					}));
 	}
 }

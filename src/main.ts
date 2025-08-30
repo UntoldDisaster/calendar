@@ -1,14 +1,6 @@
-import {App, Editor, MarkdownView, Modal, Plugin, WorkspaceLeaf} from 'obsidian';
-import {DisastersCalendarSettingTab} from "./setting/settings.view";
-import {View, CalendarView} from "./view/view";
-
-interface DisastersCalendarSettings {
-	mySetting: string;
-}
-
-const DEFAULT_SETTINGS: DisastersCalendarSettings = {
-	mySetting: 'default'
-}
+import {App, Platform, Editor, MarkdownView, Modal, Plugin, WorkspaceLeaf} from 'obsidian';
+import {DEFAULT_SETTINGS, DisastersCalendarSettings, DisastersCalendarSettingTab} from "./setting/settings.view";
+import {CalendarView, View} from "./view/view";
 
 export default class DisastersCalendar extends Plugin {
 	settings: DisastersCalendarSettings;
@@ -20,11 +12,18 @@ export default class DisastersCalendar extends Plugin {
 		this.registerViews();
 
 		// This creates an icon in the left ribbon.
-		const ribbonIconEl = this.addRibbonIcon(View.Calendar.icon, 'Open Calendar', (evt: MouseEvent) => {
-		});
-
+		if(this.settings.showCalendarRibbon) {
+			this.addRibbonIcon(View.Calendar.icon,
+				'Open Calendar',
+				(evt: MouseEvent) => {
+					this.addCalendarView({
+						full: evt.getModifierState(
+							Platform.isMacOS ? "Meta" : "Control"
+						),
+					});
+			});
+		}
 		// Perform additional things with the ribbon
-		ribbonIconEl.addClass('my-plugin-ribbon-class');
 
 		//this.addStatusItems();
 
@@ -57,6 +56,27 @@ export default class DisastersCalendar extends Plugin {
 
 	async registerViews() {
 		this.registerView(View.Calendar.key, (leaf: WorkspaceLeaf) => new CalendarView(leaf));
+	}
+
+	addCalendarView(params: { full?: boolean; startup?: boolean } = {}) {
+		if (params?.startup && this.app.workspace.getLeavesOfType(View.Calendar.key)?.length) {
+			return;
+		}
+		this.getLeaf(params?.full ?? false);
+	}
+
+	getLeaf(full: boolean) {
+		let leaf: WorkspaceLeaf | null = full
+			? this.app.workspace.getLeaf(true)
+			: this.app.workspace.getRightLeaf(false);
+
+		leaf?.setViewState({
+			type: View.Calendar.key,
+		});
+
+		if (leaf) this.app.workspace.revealLeaf(leaf);
+
+		return leaf;
 	}
 
 	addStatusItems() {
